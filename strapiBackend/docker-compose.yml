@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  build:
+      context: app
+      dockerfile: Dockerfile
+  strapiexample:
+    image: strapi/strapi
+    container_name: strapiexample
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - strapi-app-network
+    volumes:
+      - strapidata:/data/db
+    working_dir: /app
+    ports:
+      - "1337:1337"
+  mongoexample:
+    image: mongo
+    container_name: mongoexample
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - strapi-app-network
+    volumes:
+      - strapidata:/data/db
+    ports:
+      - "27017:27017"
+
+
+
+volumes:
+  strapidata:
+  
